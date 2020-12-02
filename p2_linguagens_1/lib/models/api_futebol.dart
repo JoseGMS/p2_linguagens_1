@@ -1,13 +1,20 @@
+import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class FutAPI {
+class NetworkHelper{
+  final String url;
+  NetworkHelper({this.url});
 
-  final String apiUrl = "https://api.api-futebol.com.br/v1/";
+  Future getData() async{
+    http.Response response = await http.get(url, headers:{"Authorization":" Bearer test_680593d5bebc54c900868ad116367b"});
+    if(response.statusCode == 200) {
+      return jsonDecode(response.body);
 
-  static const api_key = "live_00c695e09e2aef1f69c601024afd49";
-
-  static const headers = {
-    'Authorization: Bearer' api_key
-  };
-
+    }
+    else{
+      print(response.statusCode);
+      return null;
+    }
+  }
 }
